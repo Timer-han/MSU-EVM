@@ -4,7 +4,7 @@ int main() {
     FILE *in;
     int k, sm, p = 0, x, y, z;
     k = 1; sm = 0;
-    in = fopen("../input.txt", "r");
+    in = fopen("logs.txt", "r");
     if (in == NULL){
         printf("\n[+] File not opened. Error\n");
         return -1;
@@ -25,7 +25,7 @@ int main() {
         } else if(x == y && (y % 10 == 8 || y % 10 == 7)){
             p += y * 2;
             x = -2139999999;
-        } else if (y > x){
+        } else if (y > x && (y % 10 == 8 || y % 10 == 7)){
             p += y;
         }
     }
