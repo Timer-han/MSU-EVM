@@ -4,7 +4,7 @@ int main() {
     FILE *in;
     int k, sm, p = 0, x, y, z;
     k = 1; sm = 0;
-    in = fopen("logs.txt", "r");
+    in = fopen("../input.txt", "r");
     if (in == NULL){
         printf("\n[+] File not opened. Error\n");
         return -1;
@@ -32,8 +32,11 @@ int main() {
     while (fscanf(in, "%d", &z) == 1){
         if (z == y && (z % 10 == 8 || z % 10 == 7)){
             p += z;
-        } else if (z > y){
-            p = z;
+        } else if (z > y ){
+            if (z % 10 == 8 || z % 10 == 7)
+            {
+                p = z;
+            }
             x = y;
             y = z;
         } else if (z < y){
