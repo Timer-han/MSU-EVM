@@ -20,9 +20,9 @@ int main() {
         }
     }
     if (fscanf(in, "%d%d", &x, &y) == 2){
-        if (x > y){
+        if (x > y && (x % 10 == 8 || x % 10 == 7)){
             sm += x;
-        } else if(x == y){
+        } else if(x == y && (y % 10 == 8 || y % 10 == 7)){
             p += y * 2;
             x = -2139999999;
         } else if (y > x){
@@ -30,7 +30,7 @@ int main() {
         }
     }
     while (fscanf(in, "%d", &z) == 1){
-        if (z == y){
+        if (z == y && (z % 10 == 8 || z % 10 == 7)){
             p += z;
         } else if (z > y){
             p = z;
