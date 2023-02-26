@@ -92,7 +92,7 @@ sprintf(s, "%d", x);
 sprintf(s, "x=%d, ...", x);
 // числа в строку
 
-snprintf(s, n, "x=%d, ", x, y, x, ...);
+snprintf(s, n, "x=%d,... ", x, y, x, ...);
 // n символов в строку s
 
 sscanf(s, "%d", &x);
