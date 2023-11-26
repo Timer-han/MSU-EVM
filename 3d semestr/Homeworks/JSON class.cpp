@@ -1,6 +1,15 @@
 #include <iostream>
+#include <typeinfo>
 
 using namespace std;
+
+class Integer;
+
+class Double;
+
+class List;
+
+class Node;
 
 class Node {
 public:
@@ -13,17 +22,27 @@ public:
     Эти методы должны конвертировать объект в указанный тип данных.
     В случае, если конвертация невозможна, требуется выбросить исключение.
     */
-    const Integer &AsInteger() const;
 
-    Integer &AsInteger();
+    const Integer &AsInteger() const {
+        try {
+            if (typeid(*this).name() == "Integer"){
+                throw "Can't convert to Integer!";
+            }
+        } catch (const char * str1){
+            cout << "Error " << str1 << endl;
+        }
 
-    const Double &AsDouble() const;
+    };
 
-    Double &AsDouble();
+    Integer &AsInteger() {};
 
-    const List &AsList() const;
+    const Double &AsDouble() const {};
 
-    List &AsList();
+    Double &AsDouble() {};
+
+    const List &AsList() const {};
+
+    List &AsList() {};
 
     virtual ~Node() {}
 };
@@ -35,9 +54,7 @@ private:
 public:
     Integer() {};
 
-    Integer(int value) {
-        this->value = value;
-    };
+    Integer(int value) : value(value) {};
 
     /* Методы для чтения/записи приватных полей. */
     int Value() const {
@@ -62,14 +79,12 @@ public:
 
 class Double : public Node {
 private:
-    double value;
+    double value{};
 
 public:
     Double() {};
 
-    Double(double value) {
-        this->value = value;
-    };
+    Double(double value) : value(value) {};
 
     double Value() const {
         return value;
@@ -95,7 +110,7 @@ class List : public Node {
 private:
     // Элементы списка. Каждый элемент --- указатель на Node для
     // того, чтобы обеспечить полиморфное поведение.
-    Node **values;
+    Node **values{};
     size_t count;
     size_t lengh;
 
@@ -175,6 +190,9 @@ public:
     };
 };
 
-int main(){
-
+int main() {
+    List *a = new List[10];
+    for (int i = 0; i < 10; ++i) {
+        a[i] = (Integer)(i);
+    }
 }
