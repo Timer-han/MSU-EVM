@@ -23,26 +23,17 @@ public:
     В случае, если конвертация невозможна, требуется выбросить исключение.
     */
 
-    const Integer &AsInteger() const {
-        try {
-            if (typeid(*this).name() == "Integer"){
-                throw "Can't convert to Integer!";
-            }
-        } catch (const char * str1){
-            cout << "Error " << str1 << endl;
-        }
+    const Integer &AsInteger() const;
 
-    };
+    Integer &AsInteger();
 
-    Integer &AsInteger() {};
+    const Double &AsDouble() const;
 
-    const Double &AsDouble() const {};
+    Double &AsDouble();
 
-    Double &AsDouble() {};
+    const List &AsList() const;
 
-    const List &AsList() const {};
-
-    List &AsList() {};
+    List &AsList();
 
     virtual ~Node() {}
 };
@@ -65,8 +56,131 @@ public:
         return value;
     };
 
+
+    // overloading operators
+    Integer operator+(Integer value) const{
+        value.value += this->value;
+        return value;
+    }
+
+    template<typename Type>
+    Integer operator+(Type value) const{
+        Integer a(value + this->value);
+        return a;
+    }
+
+    Integer operator-(Integer value) const{
+        value.value = this->value - value.value;
+        return value;
+    }
+
+    template<typename Type>
+    Integer operator-(Type value) const{
+        Integer a(this->value - value);
+        return a;
+    }
+
+    Integer operator*(Integer value) const{
+        value.value = this->value * value.value;
+        return value;
+    }
+
+    template<typename Type>
+    Integer operator*(Type value) const{
+        Integer a(this->value * value);
+        return a;
+    }
+
+    Integer operator/(Integer value) const{
+        value.value = this->value / value.value;
+        return value;
+    }
+
+    template<typename Type>
+    Integer operator/(Type value) const{
+        Integer a(this->value / value);
+        return a;
+    }
+
+    Integer &operator=(Integer value) {
+        this->value = value.value;
+        return *this;
+    }
+
+    template<typename Type>
+    Integer &operator=(Type value) {
+        this->value = value;
+        return *this;
+    }
+
+    template<typename Type>
+    Integer & operator+=(Type value) {
+        *this = *this + value;
+        return *this;
+    }
+
+    template<typename Type>
+    Integer & operator-=(Type value) {
+        this->value = this->value - value;
+        return *this;
+    }
+
+    template<typename Type>
+    Integer & operator*=(Type value) {
+        this->value = this->value * value;
+        return *this;
+    }
+
+    template<typename Type>
+    Integer & operator/=(Type value) {
+        this->value = this->value / value;
+        return *this;
+    }
+
+    bool operator<(Integer value) const{
+        return this->value < value.value;
+    }
+
+    template<typename Type>
+    bool operator<(Type value) const{
+        return this->value < value;
+    }
+
+    template<typename Type>
+    bool operator==(Type value) const{
+        double a = this->value, eps = a;
+        while (eps + a > a){
+            eps /= 2;
+        }
+        eps *= 4;
+
+        return ((*this - value) < eps and (value - *this) < eps);
+    }
+
+    template<typename Type>
+    bool operator!=(Type value) const{
+        return !(*this == value);
+    }
+
+    template<typename Type>
+    bool operator>(Type value) const{
+        return value < *this;
+    }
+
+    template<typename Type>
+    bool operator>=(Type value) const{
+        return value < *this or value == *this;
+    }
+
+    template<typename Type>
+    bool operator<=(Type value) const{
+        return value > *this or value == *this;
+    }
+    // end of overloading operators
+
+
     std::string ToString() const override {
-        char *str = "";
+        char *str = new char[10];
         sprintf(str, "%d", value);
         return (string) str;
     };
@@ -79,7 +193,7 @@ public:
 
 class Double : public Node {
 private:
-    double value{};
+    double value;
 
 public:
     Double() {};
@@ -94,11 +208,133 @@ public:
         return value;
     };
 
+    // overloading operators
+    Double operator+(Double value) const{
+        value.value += this->value;
+        return value;
+    }
+
+    template<typename Type>
+    Double operator+(Type value) const{
+        Double a(value + this->value);
+        return a;
+    }
+
+    Double operator-(Double value) const{
+        value.value = this->value - value.value;
+        return value;
+    }
+
+    template<typename Type>
+    Double operator-(Type value) const{
+        Double a(this->value - value);
+        return a;
+    }
+
+    Double operator*(Double value) const{
+        value.value = this->value * value.value;
+        return value;
+    }
+
+    template<typename Type>
+    Double operator*(Type value) const{
+        Double a(this->value * value);
+        return a;
+    }
+
+    Double operator/(Double value) const{
+        value.value = this->value / value.value;
+        return value;
+    }
+
+    template<typename Type>
+    Double operator/(Type value) const{
+        Double a(this->value / value);
+        return a;
+    }
+
+    Double &operator=(Double value) {
+        this->value = value.value;
+        return *this;
+    }
+
+    template<typename Type>
+    Double &operator=(Type value) {
+        this->value = value;
+        return *this;
+    }
+
+    template<typename Type>
+    Double & operator+=(Type value) {
+        *this = *this + value;
+        return *this;
+    }
+
+    template<typename Type>
+    Double & operator-=(Type value) {
+        this->value = this->value - value;
+        return *this;
+    }
+
+    template<typename Type>
+    Double & operator*=(Type value) {
+        this->value = this->value * value;
+        return *this;
+    }
+
+    template<typename Type>
+    Double & operator/=(Type value) {
+        this->value = this->value / value;
+        return *this;
+    }
+
+    bool operator<(Double value) const{
+        return this->value < value.value;
+    }
+
+    template<typename Type>
+    bool operator<(Type value) const{
+        return this->value < value;
+    }
+
+    template<typename Type>
+    bool operator==(Type value) const{
+        double a = this->value, eps = a;
+        while (eps + a > a){
+            eps /= 2;
+        }
+        eps *= 4;
+
+        return ((*this - value) < eps and (value - *this) < eps);
+    }
+
+    template<typename Type>
+    bool operator!=(Type value) const{
+        return !(*this == value);
+    }
+
+    template<typename Type>
+    bool operator>(Type value) const{
+        return value < *this;
+    }
+
+    template<typename Type>
+    bool operator>=(Type value) const{
+        return value < *this or value == *this;
+    }
+
+    template<typename Type>
+    bool operator<=(Type value) const{
+        return value > *this or value == *this;
+    }
+    // end of overloading operators
+
     std::string ToString() const override {
-        char *str;
+        char *str = new char[10];
         sprintf(str, "%lf", value);
         return (string) str;
     };
+
 
     void Print(std::ostream &out) const override {
         out << value;
@@ -181,6 +417,7 @@ public:
         return str;
     };
 
+
     void Print(std::ostream &out) const override {
         out << "[" << values[0]->ToString();
         for (int i = 1; i < lengh; i++) {
@@ -190,9 +427,92 @@ public:
     };
 };
 
-int main() {
-    List *a = new List[10];
-    for (int i = 0; i < 10; ++i) {
-        a[i] = (Integer)(i);
+
+const Integer &Node::AsInteger() const {
+    if (dynamic_cast<const Integer *>(this)) {
+        throw "Can't convert to Integer!";
     }
+    return *(dynamic_cast<const Integer *>(this));
+};
+
+Integer &Node::AsInteger() {
+
+    if (dynamic_cast<Integer *>(this)) {
+        throw "Can't convert to Integer!";
+    }
+    return *(dynamic_cast<Integer *>(this));
+
+};
+
+const Double &Node::AsDouble() const {
+    if (dynamic_cast<const Double *>(this)) {
+        throw "Can't convert to Double!";
+    }
+    return *(dynamic_cast<const Double *>(this));
+};
+
+Double &Node::AsDouble() {
+    if (dynamic_cast<Double *>(this)) {
+        throw "Can't convert to Integer!";
+    }
+    return *(dynamic_cast<Double *>(this));
+};
+
+const List &Node::AsList() const {
+    if (dynamic_cast<const List *>(this)) {
+        throw "Can't convert to Integer!";
+    }
+    return *(dynamic_cast<const List *>(this));
+};
+
+List &Node::AsList() {
+    if (dynamic_cast<List *>(this)) {
+        throw "Can't convert to Integer!";
+    }
+    return *(dynamic_cast<List *>(this));
+};
+
+
+ostream &operator<<(ostream &out, Integer value){
+    out << value.Value();
+    return out;
+}
+
+ostream &operator<<(ostream &out, Double value){
+    out << value.Value();
+    return out;
+}
+
+int main() {
+    Double a = 5, b = 6;
+    cout << " a = " << a << ", b = " << b << endl;
+    cout << "(a < b)  " << (a < b) << endl;
+    cout << "(a > b)  " << (a > b) << endl;
+    cout << "(a <= b) " << (a <= b) << endl;
+    cout << "(a >= b) " << (a >= b) << endl;
+    cout << "(a == b) " << (a == b) << endl;
+    cout << "(a != b) " << (a != b) << endl;
+
+    cout << "(a < a)  " << (a < a) << endl;
+    cout << "(a > a)  " << (a > a) << endl;
+    cout << "(a <= a) " << (a <= a) << endl;
+    cout << "(a >= a) " << (a >= a) << endl;
+    cout << "(a == a) " << (a == a) << endl;
+    cout << "(a != a) " << (a != a) << endl;
+
+
+    cout << "(a + b)  " << (a + b) << endl;
+    cout << "(a - b)  " << (a - b) << endl;
+    cout << "(a * b)  " << (a * b) << endl;
+    cout << "(a / b)  " << (a / b) << endl;
+    cout << "(a += b) " << (a += b) << endl;
+    cout << " b       " << a << endl;
+
+
+    List m;
+    for (int i = 0; i < 1000; ++i) {
+        a = i;
+        m.AddNode(*a);
+    }
+    return 0;
 }
