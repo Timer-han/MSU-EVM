@@ -57,132 +57,10 @@ public:
     };
 
 
-    // overloading operators
-    Integer operator+(Integer value) const{
-        value.value += this->value;
-        return value;
-    }
-
-    template<typename Type>
-    Integer operator+(Type value) const{
-        Integer a(value + this->value);
-        return a;
-    }
-
-    Integer operator-(Integer value) const{
-        value.value = this->value - value.value;
-        return value;
-    }
-
-    template<typename Type>
-    Integer operator-(Type value) const{
-        Integer a(this->value - value);
-        return a;
-    }
-
-    Integer operator*(Integer value) const{
-        value.value = this->value * value.value;
-        return value;
-    }
-
-    template<typename Type>
-    Integer operator*(Type value) const{
-        Integer a(this->value * value);
-        return a;
-    }
-
-    Integer operator/(Integer value) const{
-        value.value = this->value / value.value;
-        return value;
-    }
-
-    template<typename Type>
-    Integer operator/(Type value) const{
-        Integer a(this->value / value);
-        return a;
-    }
-
-    Integer &operator=(Integer value) {
-        this->value = value.value;
-        return *this;
-    }
-
-    template<typename Type>
-    Integer &operator=(Type value) {
-        this->value = value;
-        return *this;
-    }
-
-    template<typename Type>
-    Integer & operator+=(Type value) {
-        *this = *this + value;
-        return *this;
-    }
-
-    template<typename Type>
-    Integer & operator-=(Type value) {
-        this->value = this->value - value;
-        return *this;
-    }
-
-    template<typename Type>
-    Integer & operator*=(Type value) {
-        this->value = this->value * value;
-        return *this;
-    }
-
-    template<typename Type>
-    Integer & operator/=(Type value) {
-        this->value = this->value / value;
-        return *this;
-    }
-
-    bool operator<(Integer value) const{
-        return this->value < value.value;
-    }
-
-    template<typename Type>
-    bool operator<(Type value) const{
-        return this->value < value;
-    }
-
-    template<typename Type>
-    bool operator==(Type value) const{
-        double a = this->value, eps = a;
-        while (eps + a > a){
-            eps /= 2;
-        }
-        eps *= 4;
-
-        return ((*this - value) < eps and (value - *this) < eps);
-    }
-
-    template<typename Type>
-    bool operator!=(Type value) const{
-        return !(*this == value);
-    }
-
-    template<typename Type>
-    bool operator>(Type value) const{
-        return value < *this;
-    }
-
-    template<typename Type>
-    bool operator>=(Type value) const{
-        return value < *this or value == *this;
-    }
-
-    template<typename Type>
-    bool operator<=(Type value) const{
-        return value > *this or value == *this;
-    }
-    // end of overloading operators
-
-
     std::string ToString() const override {
         char *str = new char[10];
         sprintf(str, "%d", value);
-        return (string) str;
+        return (std::string) str;
     };
 
     void Print(std::ostream &out) const override {
@@ -208,126 +86,6 @@ public:
         return value;
     };
 
-    // overloading operators
-    Double operator+(Double value) const{
-        value.value += this->value;
-        return value;
-    }
-
-    template<typename Type>
-    Double operator+(Type value) const{
-        Double a(value + this->value);
-        return a;
-    }
-
-    Double operator-(Double value) const{
-        value.value = this->value - value.value;
-        return value;
-    }
-
-    template<typename Type>
-    Double operator-(Type value) const{
-        Double a(this->value - value);
-        return a;
-    }
-
-    Double operator*(Double value) const{
-        value.value = this->value * value.value;
-        return value;
-    }
-
-    template<typename Type>
-    Double operator*(Type value) const{
-        Double a(this->value * value);
-        return a;
-    }
-
-    Double operator/(Double value) const{
-        value.value = this->value / value.value;
-        return value;
-    }
-
-    template<typename Type>
-    Double operator/(Type value) const{
-        Double a(this->value / value);
-        return a;
-    }
-
-    Double &operator=(Double value) {
-        this->value = value.value;
-        return *this;
-    }
-
-    template<typename Type>
-    Double &operator=(Type value) {
-        this->value = value;
-        return *this;
-    }
-
-    template<typename Type>
-    Double & operator+=(Type value) {
-        *this = *this + value;
-        return *this;
-    }
-
-    template<typename Type>
-    Double & operator-=(Type value) {
-        this->value = this->value - value;
-        return *this;
-    }
-
-    template<typename Type>
-    Double & operator*=(Type value) {
-        this->value = this->value * value;
-        return *this;
-    }
-
-    template<typename Type>
-    Double & operator/=(Type value) {
-        this->value = this->value / value;
-        return *this;
-    }
-
-    bool operator<(Double value) const{
-        return this->value < value.value;
-    }
-
-    template<typename Type>
-    bool operator<(Type value) const{
-        return this->value < value;
-    }
-
-    template<typename Type>
-    bool operator==(Type value) const{
-        double a = this->value, eps = a;
-        while (eps + a > a){
-            eps /= 2;
-        }
-        eps *= 4;
-
-        return ((*this - value) < eps and (value - *this) < eps);
-    }
-
-    template<typename Type>
-    bool operator!=(Type value) const{
-        return !(*this == value);
-    }
-
-    template<typename Type>
-    bool operator>(Type value) const{
-        return value < *this;
-    }
-
-    template<typename Type>
-    bool operator>=(Type value) const{
-        return value < *this or value == *this;
-    }
-
-    template<typename Type>
-    bool operator<=(Type value) const{
-        return value > *this or value == *this;
-    }
-    // end of overloading operators
 
     std::string ToString() const override {
         char *str = new char[10];
@@ -398,32 +156,33 @@ public:
         if (index < lengh) {
             return values[index];
         }
+        return nullptr;
     };
 
     const Node *operator[](size_t index) const {
         if (index < lengh) {
             return values[index];
         }
+        return nullptr;
     };
 
     std::string ToString() const override {
-        string str = "[";
+        string str = "\n[\n";
         str += values[0]->ToString();
         for (int i = 1; i < lengh; i++) {
             str += ", ";
+            if (i % 5 == 0){
+                str += "\n";
+            }
             str += values[i]->ToString();
         }
-        str += "]";
+        str += "\n]\n";
         return str;
     };
 
 
     void Print(std::ostream &out) const override {
-        out << "[" << values[0]->ToString();
-        for (int i = 1; i < lengh; i++) {
-            out << ", " << values[i];
-        }
-        out << "]";
+        out << this->ToString();
     };
 };
 
@@ -473,46 +232,36 @@ List &Node::AsList() {
 };
 
 
-ostream &operator<<(ostream &out, Integer value){
+ostream &operator<<(ostream &out, Integer value) {
     out << value.Value();
     return out;
 }
 
-ostream &operator<<(ostream &out, Double value){
+ostream &operator<<(ostream &out, Double value) {
     out << value.Value();
     return out;
 }
 
 int main() {
-    Double a = 5, b = 6;
-    cout << " a = " << a << ", b = " << b << endl;
-    cout << "(a < b)  " << (a < b) << endl;
-    cout << "(a > b)  " << (a > b) << endl;
-    cout << "(a <= b) " << (a <= b) << endl;
-    cout << "(a >= b) " << (a >= b) << endl;
-    cout << "(a == b) " << (a == b) << endl;
-    cout << "(a != b) " << (a != b) << endl;
-
-    cout << "(a < a)  " << (a < a) << endl;
-    cout << "(a > a)  " << (a > a) << endl;
-    cout << "(a <= a) " << (a <= a) << endl;
-    cout << "(a >= a) " << (a >= a) << endl;
-    cout << "(a == a) " << (a == a) << endl;
-    cout << "(a != a) " << (a != a) << endl;
+    Double b = 6;
+    Integer *a = new Integer(5);
 
 
-    cout << "(a + b)  " << (a + b) << endl;
-    cout << "(a - b)  " << (a - b) << endl;
-    cout << "(a * b)  " << (a * b) << endl;
-    cout << "(a / b)  " << (a / b) << endl;
-    cout << "(a += b) " << (a += b) << endl;
-    cout << " b       " << a << endl;
-
-
-    List m;
-    for (int i = 0; i < 1000; ++i) {
-        a = i;
-        m.AddNode(*a);
+    List *subarr = new List();
+    for (int i = 0; i < 10; ++i) {
+        subarr->AddNode(new Integer(i));
+        subarr->AddNode(new Double(i * i * i / 0.232 * 12.124));
     }
+    subarr->Print(cout);
+
+    List *arr = new List(subarr->Values(), 20);
+
+    for (int i = 1; i < 100; ++i) {
+        arr->AddNode(new Double(1./i));
+        arr->AddNode(new Double(i * i * i / 0.232 * 12.124));
+    }
+    arr->AddNode(subarr);
+
+    arr->Print(cout);
     return 0;
 }
